@@ -26,8 +26,7 @@ class _LocationScreenState extends State<LocationScreen> {
 
   void updateUI(dynamic weatherData) {
     setState(() {
-      temp = weatherData['main']['temp'];
-      temperature = temp.toInt();
+      temperature = weatherData['main']['temp'];
       var condition = weatherData['weather'][0]['id'];
       location = weatherData['name'];
       conditionIcon = weather.getWeatherIcon(condition);
@@ -57,7 +56,10 @@ class _LocationScreenState extends State<LocationScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   FlatButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      var weatherData = await weather.getLocationWeather();
+                      updateUI(weatherData);
+                    },
                     child: Icon(
                       Icons.near_me,
                       size: 50.0,
